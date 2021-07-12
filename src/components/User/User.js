@@ -1,3 +1,5 @@
+import './User.css';
+
 const User = props => {
     return (
         <div className="box-user">
