@@ -1,0 +1,24 @@
+.form-control__label{
+    font-weight: bold;
+    align-content: left;
+    margin-bottom: 1%;
+}
+
+.form-control__input{
+    width: 90%;
+    padding: 1%;
+    margin-top: 2%;
+}
+
+.form-control__submit{
+    width: 20%;
+    margin-top: 2%;
+    padding: 1%;
+    background-color: green;
+    color: white;
+    border-radius: 10px;
+}
+
+.form-control__submit:hover{
+    cursor: pointer;
+}
