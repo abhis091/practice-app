@@ -1,47 +1,36 @@
-import { useState } from "react";
+import { Fragment, useState, useRef } from "react";
 import Card from "../UI/Card";
 import ErrorModal from "../UI/ErrorModal";
 import "./AddUser.css";
 
 const AddUser = (props) => {
-  const [username, setUsername] = useState("");
-  const [age, setAge] = useState("");
 
+  const unameInputRef = useRef();
+  const ageInputRef = useRef();
   const [error, setError] = useState();
 
   const addUserHandler = (event) => {
     event.preventDefault();
 
-    if (+age < 1) {
+    if (+ageInputRef < 1) {
       setError({
         header : "Age Invalid",
         content : "Age cannot be negative or zero"
       });
-      setAge("");
-    setUsername("");
       return;
+    }else{
+      props.addNewUser(unameInputRef.current.value, ageInputRef.current.value);
     }
-
-    console.log(username + " " + age);
-    props.addNewUser(username, age);
-    setAge("");
-    setUsername("");
-  };
-
-  const setUsernameHandler = (event) => {
-    setUsername(event.target.value);
-  };
-
-  const setAgeHandler = (event) => {
-    setAge(event.target.value);
+    unameInputRef.current.value = '';
+    ageInputRef.current.value = '';
   };
 
   const errorHandler = () => {
-    setError();
+    setError('');
   };
 
   return (
-    <div>
+    <Fragment>
       { error && <ErrorModal headerData={error.header} contentData={error.content} errorHandler = {errorHandler}/>}
       <Card>
         <form onSubmit={addUserHandler}>
@@ -52,8 +41,7 @@ const AddUser = (props) => {
             required
             className="form-control__input"
             type="text"
-            value={username}
-            onChange={setUsernameHandler}
+            ref = {unameInputRef}
           />
           <label className="form-control__label" htmlFor="age">
             Age (in years)
@@ -62,15 +50,14 @@ const AddUser = (props) => {
             required
             className="form-control__input"
             type="number"
-            value={age}
-            onChange={setAgeHandler}
+            ref = {ageInputRef}
           />
           <button className="form-control__submit" type="submit">
             Add User
           </button>
         </form>
       </Card>
-    </div>
+    </Fragment>
   );
 };
 
